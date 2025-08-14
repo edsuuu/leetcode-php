@@ -37,19 +37,49 @@ class LeetCode extends Controller
         };
     }
 
+    public function findDuplicate(array $nums)
+    {
+//        $count = array_count_values($nums);
+//
+//        $arrayComValoresDuplicados = [];
+//
+//        foreach ($count as $key => $value) {
+//            if ($value > 1) {
+//                $arrayComValoresDuplicados[] = [
+//                    $key => $value
+//                ];
+//            }
+//        }
+//
+//        foreach ($arrayComValoresDuplicados as $value ) {
+//            return array_key_first($value);
+//        }
+
+        $count = array_count_values($nums);
+
+        foreach ($count as $key => $value) {
+            if ($value > 1) {
+                return $key;
+            }
+        }
+    }
 
 
     public function render()
     {
         $array = [
-            'jokenpo' => [
-                'result' => $this->jokenpo(Jokenpo::TESOURA->value, Jokenpo::PAPEL->value),
-                'params' => [Jokenpo::TESOURA->value, Jokenpo::PAPEL->value]
+            'findDuplicate' => [
+                'result' => $this->findDuplicate([1,3,4,2,2]),
+                'params' => [1,3,4,2,2]
             ],
             'isPowerOfTwo' => [
                 'result' => $this->isPowerOfTwo(5),
                 'params' => [5]
-            ]
+            ],
+            'jokenpo' => [
+                'result' => $this->jokenpo(Jokenpo::TESOURA->value, Jokenpo::PAPEL->value),
+                'params' => [Jokenpo::TESOURA->value, Jokenpo::PAPEL->value]
+            ],
         ];
 
         return view('welcome', ['exercicios' => $array]);
