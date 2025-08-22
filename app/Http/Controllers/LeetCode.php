@@ -87,7 +87,7 @@ class LeetCode extends Controller
     }
 
 
-    public function downloadProposalPdf()
+    public function download()
     {
 
         $html = view('pdf.teste-pdf')->render();
