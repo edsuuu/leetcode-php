@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Jokenpo;
+use Spatie\Browsershot\Browsershot;
 
 class LeetCode extends Controller
 {
@@ -84,4 +85,25 @@ class LeetCode extends Controller
 
         return view('welcome', ['exercicios' => $array]);
     }
+
+
+    public function downloadProposalPdf()
+    {
+
+        $html = view('pdf.teste-pdf')->render();
+
+        $pdfBytes = Browsershot::html(mb_convert_encoding($html, 'UTF-8', 'UTF-8'))
+            ->setOption('executablePath', '/usr/bin/google-chrome')
+            ->setOption('printBackground', true)
+            ->showBackground()
+            ->setDelay(500)
+            ->format('A2')
+            ->showBrowserHeaderAndFooter()
+            ->pdf();
+
+        return response()->streamDownload(
+            fn() => print($pdfBytes),
+            "teste.pdf",
+            ['Content-Type' => 'application/pdf']);
+        }
 }
